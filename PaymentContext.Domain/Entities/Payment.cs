@@ -1,11 +1,13 @@
-﻿using PaymentContext.Domain.ValueObjects;
+﻿using Flunt.Validations;
+using PaymentContext.Domain.ValueObjects;
+using PaymentContext.Shared.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace PaymentContext.Domain.Entities
 {
-    public abstract class Payment
+    public abstract class Payment : Entity
     {
         protected Payment(DateTime paidDate, DateTime expireDate, decimal total, decimal totalPaid, string owner, Document document, Address address, Email email)
         {
@@ -18,6 +20,12 @@ namespace PaymentContext.Domain.Entities
             Document = document;
             Address = address;
             Email = email;
+
+            AddNotifications(new Contract()
+                .Requires()
+                .IsGreaterThan(0, Total, "Payment.Total", "Total não pode ser zero")
+                .IsGreaterOrEqualsThans(Total, TotalPaid, "Payment.TotalPaid", "O valor pago é menor que o valor do pagamento")
+                );
         }
 
         //Livro Clean Code - Robert C. Martin (Uncle BOB)
@@ -33,6 +41,7 @@ namespace PaymentContext.Domain.Entities
         public Document Document { get; private set; }
         public Address Address { get; private set; }
         public Email Email { get; private set; }
+        public object AddNotifications { get; }
     }
     
 }
