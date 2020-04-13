@@ -23,8 +23,8 @@ namespace PaymentContext.Domain.Entities
 
             AddNotifications(new Contract()
                 .Requires()
-                .IsGreaterThan(0, Total, "Payment.Total", "Total não pode ser zero")
-                .IsGreaterOrEqualsThans(Total, TotalPaid, "Payment.TotalPaid", "O valor pago é menor que o valor do pagamento")
+                .IsLowerOrEqualsThan(0, Total, "Payment.Total", "Total não pode ser zero")
+                .IsGreaterOrEqualsThan(Total, TotalPaid, "Payment.TotalPaid", "O valor pago é menor que o valor do pagamento")
                 );
         }
 
@@ -40,8 +40,7 @@ namespace PaymentContext.Domain.Entities
         public string Owner { get; private set; }
         public Document Document { get; private set; }
         public Address Address { get; private set; }
-        public Email Email { get; private set; }
-        public object AddNotifications { get; }
+        public Email Email { get; private set; }        
     }
     
 }
