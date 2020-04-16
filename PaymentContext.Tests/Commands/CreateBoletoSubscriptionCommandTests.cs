@@ -6,7 +6,8 @@ using System.Text;
 
 namespace PaymentContext.Tests.Commands
 {
-    class CreateBoletoSubscriptionCommandTests
+    [TestClass]
+    public class CreateBoletoSubscriptionCommandTests
     {
         [TestMethod]
         public void ShoulReturnErrorWhenNameIsInvalid()
